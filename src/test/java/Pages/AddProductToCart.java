@@ -15,7 +15,6 @@ public class AddProductToCart {
     WebDriver driver;
     WebDriverWait wait;
 
-    By addToCartButton = By.xpath("//button[@name='add-to-cart-sauce-labs-backpack']");
     By cartLink = By.xpath("//a[@class='shopping_cart_link']");
     By checkoutButton = By.xpath("//button[contains(@class,'checkout_button')]");
     By firstNameInput = By.xpath("//input[@name='firstName']");
@@ -33,9 +32,6 @@ public class AddProductToCart {
     }
 
     public void addProductToCartAndCheckout() throws IOException {
-        driver.findElement(addToCartButton).click();
-        driver.findElement(cartLink).click();
-        driver.findElement(checkoutButton).click();
         String path = System.getProperty("user.dir") + "//src//test//java//TestData//TestDataFile.xlsx";
         FileInputStream prop1 = null;
         try {
@@ -47,6 +43,10 @@ public class AddProductToCart {
         XSSFSheet sheet = wb.getSheet("Sheet1");
         String firstName = sheet.getRow(1).getCell(0).getStringCellValue();
         String lastName = sheet.getRow(1).getCell(1).getStringCellValue();
+        String productToAdd = sheet.getRow(1).getCell(2).getStringCellValue();
+        driver.findElement(By.xpath(String.format("//div[@class='inventory_list']//div[@class='inventory_item_description']//div[@class='pricebar']//button[@name='%s']",productToAdd))).click();
+        driver.findElement(cartLink).click();
+        driver.findElement(checkoutButton).click();
         driver.findElement(firstNameInput).sendKeys(firstName);
         driver.findElement(lastNameInput).sendKeys(lastName);
         driver.findElement(zipCodeInput).sendKeys("123456");
