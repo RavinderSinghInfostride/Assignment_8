@@ -1,0 +1,5 @@
+Pages\LoginPage.class
+Pages\PageFactory.class
+StepDefinition\LoginSteps.class
+Runner\Runner.class
+Pages\BaseClass.class
